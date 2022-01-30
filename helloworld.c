@@ -162,8 +162,9 @@ int main(int argc, char **argv)
     if (fd < 0)
     {
         close(fd);
+        free(dicts);
         print_err();
-        return (0);
+        exit(0);
     }
     
     b_read = 1;
@@ -181,6 +182,8 @@ int main(int argc, char **argv)
             a = (char*)malloc(128 * sizeof(char));
             if (a == NULL)
             {
+                close(fd);
+                free(dicts);
                 print_err();
                 exit(0);
             }
@@ -216,6 +219,9 @@ int main(int argc, char **argv)
             b = (char*)malloc(128 * sizeof(char));
             if (b == NULL)
             {
+                free(a);
+                free(dicts);
+                close(fd);
                 print_err();
                 exit(0);
             }
@@ -238,6 +244,10 @@ int main(int argc, char **argv)
             new_dict = (struct t_dict*)malloc(sizeof(struct t_dict));
             if (new_dict == NULL)
             {
+                free(a);
+                free(b);
+                free(dicts);
+                close(fd);
                 print_err();
                 exit(0);
             }
