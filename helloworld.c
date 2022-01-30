@@ -145,6 +145,7 @@ int main(int argc, char **argv)
 
     if (argc < 2 || argc > 3)
     {
+        free_dict(dicts);
         print_err();
         return (0);
     }
@@ -192,7 +193,7 @@ int main(int argc, char **argv)
             {
                 a[i++] = buffer;
                 b_read = read(fd, &buffer, 1);
-                if (buffer == ':')
+                if (buffer == ':' || buffer == ' ')
                 {
                     break;
                 }
