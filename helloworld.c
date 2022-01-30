@@ -68,9 +68,11 @@ void print_dict(struct t_dict *head)
 
 void free_dict(struct t_dict *head)
 {
+    struct t_dict *tmp;
     while (head != NULL)
     {
-        free(head);
+        tmp = head;
+        free(tmp);
         head = head->next;
     }
 }
@@ -97,6 +99,7 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	return (dest);
 }
 
+//TODO: Change this to str to unsingned int.
 int	atoi(char *str)
 {
 	int neg;
@@ -131,6 +134,12 @@ int main(int argc, char **argv)
     path = "number.dict";
 
     dicts = (struct t_dict*)malloc(sizeof(struct t_dict));
+    if (dicts == NULL)
+    {
+        print_err();
+        exit(0);
+    }
+    
     dicts->value = -1;
     dicts->next = NULL;
 
@@ -170,7 +179,12 @@ int main(int argc, char **argv)
             i = 0;
 
             a = (char*)malloc(128 * sizeof(char));
-
+            if (a == NULL)
+            {
+                print_err();
+                exit(0);
+            }
+            
             while (b_read > 0)
             {
                 a[i++] = buffer;
@@ -200,7 +214,11 @@ int main(int argc, char **argv)
             j = 0;
 
             b = (char*)malloc(128 * sizeof(char));
-
+            if (b == NULL)
+            {
+                print_err();
+                exit(0);
+            }
             while (b_read > 0)
             {
                 // printf("%c", buffer);
@@ -218,6 +236,11 @@ int main(int argc, char **argv)
             struct t_dict   *new_dict;
 
             new_dict = (struct t_dict*)malloc(sizeof(struct t_dict));
+            if (new_dict == NULL)
+            {
+                print_err();
+                exit(0);
+            }
             // TODO: validate value is unsined int
             new_dict->value = atoi(a); 
             new_dict->word = (char*)malloc(j * sizeof(char));
@@ -243,5 +266,6 @@ int main(int argc, char **argv)
     }
     
     free_dict(dicts);
+    // print_dict(dicts);
     return (0);
 }
